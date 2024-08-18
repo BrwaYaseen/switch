@@ -67,3 +67,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+.cl-internal-1dauvpw {
+  display: none;
+}
+
+html,
+body,
+:root {
+  height: 100%;
+}

@@ -1,10 +1,12 @@
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import { UserButton } from "@clerk/nextjs";
 
 export default function Home() {
   return (
-    <Button size="lg" variant="link">
-      button
-    </Button>
+    <div className="flex flex-col gap-y-4">
+      <h1>Board</h1>
+      <UserButton />
+      {/*       <UserButton signOutFallbackRedirectUrl='/foo' />
+       */}{" "}
+    </div>
   );
 }
