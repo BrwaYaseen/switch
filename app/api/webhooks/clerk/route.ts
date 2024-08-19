@@ -21,6 +21,7 @@ export async function POST(req: Request) {
 
   const payload = await req.json();
   const body = JSON.stringify(payload);
+  console.log("Payload data:", payload.data);
 
   const wh = new Webhook(WEBHOOK_SECRET);
 
@@ -49,7 +50,7 @@ export async function POST(req: Request) {
         },
       });
     } catch (dbError) {
-      console.error("Database error:", dbError);
+      console.error("Database error:", JSON.stringify(dbError, null, 2));
       return new Response("Internal Server Error", { status: 500 });
     }
   }
