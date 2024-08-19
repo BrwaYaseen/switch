@@ -7,16 +7,16 @@ export async function POST(req: Request) {
   const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET;
 
   if (!WEBHOOK_SECRET) {
-    throw new Error("There is a problem with the webhook");
+    throw new Error("Webhook secret is missing");
   }
 
   const headerPayload = headers();
-  const svix_id = headerPayload.get("svix_id");
-  const svix_timestamp = headerPayload.get("svix_timestamp");
-  const svix_signature = headerPayload.get("svix_signature");
+  const svix_id = headerPayload.get("svix-id");
+  const svix_timestamp = headerPayload.get("svix-timestamp");
+  const svix_signature = headerPayload.get("svix-signature");
 
   if (!svix_id || !svix_timestamp || !svix_signature) {
-    return new Response("No svix headers", { status: 400 });
+    return new Response("Missing svix headers", { status: 400 });
   }
 
   const payload = await req.json();
@@ -34,22 +34,25 @@ export async function POST(req: Request) {
     }) as WebhookEvent;
   } catch (error) {
     console.error("Error verifying webhook:", error);
-    return new Response("Error :", {
-      status: 400,
-    });
+    return new Response(`Verification error: ${error}`, { status: 400 });
   }
 
   const eventType = evt.type;
 
   if (eventType === "user.created") {
-    await db.user.create({
-      data: {
-        externalUserId: payload.data.id,
-        username: payload.data.username,
-        imageUrl: payload.data.image_url,
-      },
-    });
+    try {
+      await db.user.create({
+        data: {
+          externalUserId: payload.data.id,
+          username: payload.data.username,
+          imageUrl: payload.data.image_url,
+        },
+      });
+    } catch (dbError) {
+      console.error("Database error:", dbError);
+      return new Response("Internal Server Error", { status: 500 });
+    }
   }
 
-  return new Response("", { status: 200 });
+  return new Response("Webhook processed successfully", { status: 200 });
 }
