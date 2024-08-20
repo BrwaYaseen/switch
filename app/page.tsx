@@ -5,8 +5,6 @@ export default function Home() {
     <div className="flex flex-col gap-y-4">
       <h1>Board</h1>
       <UserButton />
-      {/*       <UserButton signOutFallbackRedirectUrl='/foo' />
-       */}{" "}
     </div>
   );
 }

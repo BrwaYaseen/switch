@@ -54,6 +54,34 @@ export async function POST(req: Request) {
       return new Response("Internal Server Error", { status: 500 });
     }
   }
+  if (eventType === "user.updated") {
+    try {
+      await db.user.update({
+        where: {
+          externalUserId: payload.data.id,
+        },
+        data: {
+          username: payload.data.username,
+          imageUrl: payload.data.image_url,
+        },
+      });
+    } catch (dbError) {
+      console.error("Database error:", JSON.stringify(dbError, null, 2));
+      return new Response("Internal Server Error", { status: 500 });
+    }
+  }
+  if (eventType === "user.deleted") {
+    try {
+      await db.user.delete({
+        where: {
+          externalUserId: payload.data.id,
+        },
+      });
+    } catch (dbError) {
+      console.error("Database error:", JSON.stringify(dbError, null, 2));
+      return new Response("Internal Server Error", { status: 500 });
+    }
+  }
 
   return new Response("Webhook processed successfully", { status: 200 });
 }
