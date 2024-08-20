@@ -39,7 +39,7 @@ export const UserAvatar = ({
           avatarSizes({ size })
         )}
       >
-        <AvatarImage src={imageUrl} className=" object-cover" />
+        <AvatarImage src={imageUrl} className="object-cover" />
         <AvatarFallback>
           {username[0]}
           {username[username.length - 1]}
@@ -47,7 +47,7 @@ export const UserAvatar = ({
       </Avatar>
       {canShowBadge && (
         <div
-          className="aboslute -bottom-3 left-1/2 transform
+          className="absolute -bottom-3 left-1/2 transform
          -translate-x-1/2"
         >
           <LiveBadge />
