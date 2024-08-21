@@ -121,3 +121,26 @@ export const unFollowUser = async (id: string) => {
 
   return follow;
 };
+
+export const getFollowedUsers = async () => {
+  try {
+    const self = await getSelf();
+
+    if (!self) {
+      throw new Error("Unauthorized");
+    }
+
+    const followedUsers = db.follow.findMany({
+      where: {
+        followerId: self.id,
+      },
+      include: {
+        following: true,
+      },
+    });
+
+    return followedUsers;
+  } catch {
+    return [];
+  }
+};
