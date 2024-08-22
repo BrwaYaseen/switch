@@ -55,26 +55,26 @@ export const createIngress = async (ingressType: IngressInput) => {
     roomName: self.id,
     participantName: self.username,
     participantIdentity: self.id,
-  };
 
-  if (ingressType === IngressInput.WHIP_INPUT) {
-    options.enableTranscoding = false;
-  } else {
-    options.audio = {
+    video: new IngressVideoOptions({
+      source: TrackSource.CAMERA,
+      encodingOptions: {
+        case: "preset",
+        value: IngressVideoEncodingPreset.H264_1080P_30FPS_1_LAYER,
+      },
+    }),
+
+    audio: new IngressAudioOptions({
       source: TrackSource.MICROPHONE,
       encodingOptions: {
         case: "preset",
         value: IngressAudioEncodingPreset.OPUS_STEREO_96KBPS,
       },
-    } as IngressAudioOptions;
+    }),
+  };
 
-    options.video = {
-      source: TrackSource.CAMERA,
-      encodingOptions: {
-        case: "preset",
-        value: IngressVideoEncodingPreset.H264_1080P_30FPS_3_LAYERS,
-      },
-    } as IngressVideoOptions;
+  if (ingressType === IngressInput.WHIP_INPUT) {
+    options.enableTranscoding = true;
   }
 
   const ingress = await ingressClient.createIngress(ingressType, options);
