@@ -60,26 +60,21 @@ export const createIngress = async (ingressType: IngressInput) => {
   if (ingressType === IngressInput.WHIP_INPUT) {
     options.enableTranscoding = false;
   } else {
-    const audioOptions: Partial<IngressAudioOptions> = {
-      name: "audio",
+    options.audio = {
       source: TrackSource.MICROPHONE,
       encodingOptions: {
         case: "preset",
         value: IngressAudioEncodingPreset.OPUS_STEREO_96KBPS,
       },
-    };
+    } as IngressAudioOptions;
 
-    const videoOptions: Partial<IngressVideoOptions> = {
-      name: "video",
+    options.video = {
       source: TrackSource.CAMERA,
       encodingOptions: {
         case: "preset",
         value: IngressVideoEncodingPreset.H264_1080P_30FPS_3_LAYERS,
       },
-    };
-
-    options.audio = audioOptions as IngressAudioOptions;
-    options.video = videoOptions as IngressVideoOptions;
+    } as IngressVideoOptions;
   }
 
   const ingress = await ingressClient.createIngress(ingressType, options);
