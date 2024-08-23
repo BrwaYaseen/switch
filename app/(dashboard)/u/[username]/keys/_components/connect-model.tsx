@@ -30,7 +30,7 @@ type IngressType = typeof RTMP | typeof WHIP;
 
 export const ConnectModel = () => {
   const [isPending, startTransition] = useTransition();
-  const [IngressType, setIngressType] = useState<IngressType>(RTMP);
+  const [IngressType, setIngressType] = useState<IngressType>(WHIP);
   const closeRef = useRef<ElementRef<"button">>(null);
 
   const onSubmit = () => {
