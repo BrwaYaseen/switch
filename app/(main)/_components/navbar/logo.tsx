@@ -15,9 +15,11 @@ export const Logo = () => {
         <div className=" bg-white rounded-full p-1 mr-10 shrink-0 lg:mr-0 lg:shrink">
           <Image src="/switch.png" alt="Logo" height="30" width="30" />
         </div>
-        <div className={cn("hidden lg:block", font.className)}>
+        <div className={cn("", font.className)}>
           <p className=" text-xl font-semibold">Switch</p>
-          <p className=" text-xs text-muted-foreground">Stream it</p>
+          <p className=" text-xs text-muted-foreground hidden lg:block">
+            Stream it
+          </p>
         </div>
       </div>
     </Link>
