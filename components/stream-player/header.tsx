@@ -18,6 +18,7 @@ type HeaderProps = {
   isFollowing: boolean;
   name: string;
 };
+
 export const Header = ({
   hostName,
   hostIdentity,
@@ -34,11 +35,10 @@ export const Header = ({
 
   const hostAsViewer = `host-${hostIdentity}`;
   const isHost = viewerIdentity === hostAsViewer;
+
   return (
-    <div
-      className="flex flex-col lg:flex-row gap-y-4 lg:gap-y-0
-     items-start justify-between px-4"
-    >
+    <div className="flex items-center justify-between px-4">
+      {/* Left side: Avatar, name, stream name, and isLive status */}
       <div className="flex items-center gap-x-3">
         <UserAvatar
           imageUrl={imageUrl}
@@ -54,10 +54,7 @@ export const Header = ({
           </div>
           <p className="text-sm font-semibold">{name}</p>
           {isLive ? (
-            <div
-              className="font-semibold flex gap-x-1
-             items-center text-xs text-rose-500"
-            >
+            <div className="font-semibold flex gap-x-1 items-center text-xs text-rose-500">
               <UserIcon className="h-4 w-4" />
               <p>
                 {participantCount}
@@ -71,21 +68,22 @@ export const Header = ({
           )}
         </div>
       </div>
-      <Actions
-        isFollowing={isFollowing}
-        hostIdentity={hostIdentity}
-        isHost={isHost}
-      />
+
+      {/* Right side: Unfollow button */}
+      <div>
+        <Actions
+          isFollowing={isFollowing}
+          hostIdentity={hostIdentity}
+          isHost={isHost}
+        />
+      </div>
     </div>
   );
 };
 
 export const HeaderSkeleton = () => {
   return (
-    <div
-      className="flex flex-col lg:flex-row gap-y-4 lg:gap-y-0
-        items-start justify-between px-4"
-    >
+    <div className="flex items-center justify-between px-4">
       <div className="flex items-center gap-x-3">
         <UserAvatarSkeleton size="lg" />
         <div className="space-y-2">
@@ -93,7 +91,10 @@ export const HeaderSkeleton = () => {
           <Skeleton className="h-4 w-24" />
         </div>
       </div>
-      <ActionsSkeleton />
+
+      <div>
+        <ActionsSkeleton />
+      </div>
     </div>
   );
 };
