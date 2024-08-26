@@ -34,7 +34,6 @@ export const Actions = ({
         .catch(() => toast.error("Something Went Wrong"));
     });
   };
-
   const handleUnFollow = () => {
     startTransition(() => {
       onUnFollow(hostIdentity)
@@ -58,17 +57,16 @@ export const Actions = ({
       handleFollow();
     }
   };
-
   return (
     <Button
       onClick={toggleFollow}
       disabled={isPending || isHost}
       variant="primary"
       size="sm"
-      className="w-full lg:ml-auto"
+      className="w-full lg:w-auto"
     >
       <Icon className="h-4 w-4 mr-2" />
-      {isFollowing ? "Unfollow" : "Follow"}
+      {isFollowing ? "UnFollow" : "Follow"}
     </Button>
   );
 };
