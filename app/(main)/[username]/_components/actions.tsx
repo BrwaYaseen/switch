@@ -40,31 +40,10 @@ export const Actions = ({ isFollowing, userId }: ActionsProps) => {
     }
   };
 
-  const handleBlock = () => {
-    startTransition(() => {
-      onBlock(userId)
-        .then((data) =>
-          toast.success(`You have Blocked ${data.blocked.username}`)
-        )
-        .catch(() => toast.error("Something went wrong"));
-    });
-  };
-  const handleUnBlock = () => {
-    startTransition(() => {
-      onUnBlock(userId)
-        .then((data) =>
-          toast.success(`You have UnBlocked ${data.blocked.username}`)
-        )
-        .catch(() => toast.error("Something went wrong"));
-    });
-  };
   return (
     <>
       <Button disabled={isPending} onClick={onClick} variant="primary">
         {isFollowing ? "Unfollow" : "Follow"}
-      </Button>
-      <Button onClick={handleUnBlock} disabled={isPending}>
-        unblock
       </Button>
     </>
   );
