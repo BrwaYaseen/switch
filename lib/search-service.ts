@@ -35,8 +35,13 @@ export const getSearch = async (term?: string) => {
 
   const streams = await db.stream.findMany({
     where: baseWhereInput,
-    include: {
+    select: {
       user: true,
+      id: true,
+      name: true,
+      isLive: true,
+      thumbnailUrl: true,
+      updatedAt: true,
     },
     orderBy: [
       { isLive: "desc" as Prisma.SortOrder },
