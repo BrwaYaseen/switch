@@ -52,6 +52,7 @@ model Stream {
 
   @@index([userId])
   @@index([ingressId])
+  
 }
 
 
