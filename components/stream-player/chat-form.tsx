@@ -65,7 +65,7 @@ export const ChatForm = ({
           placeholder="Send A Message"
           className={cn(
             "border-white/10",
-            isFollowersOnly && "rounded-t-none border-t-0"
+            (isFollowersOnly || isDelayed) && "rounded-t-none border-t-0"
           )}
         />
       </div>

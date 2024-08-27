@@ -13,7 +13,14 @@ export const stringToColor = (str: string) => {
 
   let color = "#";
   for (let i = 0; i < 3; i++) {
-    const value = (hash >> (i * 8)) & 0xff;
+    let value = (hash >> (i * 8)) & 0xff;
+
+    if (value < 128) {
+      value = Math.max(0, value - 50);
+    } else {
+      value = Math.min(255, value + 50);
+    }
+
     color += value.toString(16).padStart(2, "0");
   }
 
