@@ -22,15 +22,30 @@ export const getSearch = async (term?: string) => {
   };
 
   if (userId) {
-    baseWhereInput.user = {
-      NOT: {
-        blockedBy: {
-          some: {
-            blockerId: userId,
+    baseWhereInput.AND = [
+      {
+        user: {
+          NOT: {
+            blockedBy: {
+              some: {
+                blockerId: userId,
+              },
+            },
           },
         },
       },
-    };
+      {
+        user: {
+          NOT: {
+            blocking: {
+              some: {
+                blockedId: userId,
+              },
+            },
+          },
+        },
+      },
+    ];
   }
 
   const streams = await db.stream.findMany({
